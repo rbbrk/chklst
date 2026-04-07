@@ -1,0 +1,39 @@
+import Link from "next/link";
+import { auth, signOut } from "@/auth";
+import { Button } from "@/components/ui/button";
+import { CheckSquare } from "lucide-react";
+
+export async function Nav() {
+  const session = await auth();
+
+  return (
+    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
+      <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-4">
+        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
+          <CheckSquare className="h-5 w-5" />
+          chklst
+        </Link>
+        <nav className="flex items-center gap-1">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/">Runs</Link>
+          </Button>
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/templates">Templates</Link>
+          </Button>
+          {session && (
+            <form
+              action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/" });
+              }}
+            >
+              <Button variant="ghost" size="sm" type="submit">
+                Sign out
+              </Button>
+            </form>
+          )}
+        </nav>
+      </div>
+    </header>
+  );
+}
