@@ -1,6 +1,14 @@
-export { auth as middleware } from "@/auth";
+import { auth } from "@/auth";
+import { NextResponse } from "next/server";
+
+export default auth((req) => {
+  if (!req.auth && !req.nextUrl.pathname.startsWith("/api/auth")) {
+    const signInUrl = new URL("/api/auth/signin", req.nextUrl.origin);
+    signInUrl.searchParams.set("callbackUrl", req.nextUrl.href);
+    return NextResponse.redirect(signInUrl);
+  }
+});
 
 export const config = {
-  // Protect all routes except Next.js internals and static files
-  matcher: ["/((?!api/auth|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
