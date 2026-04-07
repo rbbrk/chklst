@@ -4,7 +4,14 @@
       "mcp__toolshed__execute_internal_search",
       "mcp__toolshed__get_trailhead_doc",
       "Bash(npm install:*)",
-      "Bash(vercel login:*)"
+      "Bash(vercel login:*)",
+      "Bash(vercel env:*)",
+      "Bash(vercel inspect:*)",
+      "Bash(vercel ls:*)",
+      "Bash(vercel project:*)",
+      "Bash(openssl rand:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
