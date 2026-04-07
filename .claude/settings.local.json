@@ -11,7 +11,9 @@
       "Bash(vercel project:*)",
       "Bash(openssl rand:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(vercel:*)"
     ]
   }
 }

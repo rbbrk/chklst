@@ -20,17 +20,22 @@ export async function Nav() {
           <Button variant="ghost" size="sm" asChild>
             <Link href="/templates">Templates</Link>
           </Button>
-          {session && (
-            <form
-              action={async () => {
-                "use server";
-                await signOut({ redirectTo: "/" });
-              }}
-            >
-              <Button variant="ghost" size="sm" type="submit">
-                Sign out
-              </Button>
-            </form>
+          {session?.user && (
+            <>
+              <span className="ml-2 text-xs text-muted-foreground">
+                {session.user.name ?? session.user.email}
+              </span>
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut({ redirectTo: "/" });
+                }}
+              >
+                <Button variant="ghost" size="sm" type="submit">
+                  Sign out
+                </Button>
+              </form>
+            </>
           )}
         </nav>
       </div>
