@@ -14,12 +14,16 @@ export async function Nav() {
           chklst
         </Link>
         <nav className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/">Runs</Link>
-          </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/templates">Templates</Link>
-          </Button>
+          {session?.user && (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/">Runs</Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/templates">Templates</Link>
+              </Button>
+            </>
+          )}
           {session?.user && (
             <>
               <span className="ml-2 text-xs text-muted-foreground">

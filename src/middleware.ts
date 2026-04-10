@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
 export default auth((req) => {
-  if (!req.auth && !req.nextUrl.pathname.startsWith("/api/auth")) {
+  if (!req.auth && req.nextUrl.pathname !== "/" && !req.nextUrl.pathname.startsWith("/api/auth")) {
     const signInUrl = new URL("/api/auth/signin", req.nextUrl.origin);
     signInUrl.searchParams.set("callbackUrl", req.nextUrl.href);
     return NextResponse.redirect(signInUrl);

@@ -1,15 +1,34 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 import { getRuns, getTemplates } from "@/lib/kv";
 import { getRunStatus } from "@/lib/types";
 import { RunCard } from "@/components/run-card";
 import { Button } from "@/components/ui/button";
 import { StartRunButton } from "@/components/start-run-button";
 import { Separator } from "@/components/ui/separator";
-import { Plus } from "lucide-react";
+import { CheckSquare, Plus } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-export default async function DashboardPage() {
+export default async function HomePage() {
+  const session = await auth();
+
+  if (!session?.user) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <CheckSquare className="h-12 w-12 mb-4" />
+        <h1 className="text-3xl font-bold tracking-tight mb-2">chklst</h1>
+        <p className="text-muted-foreground mb-8 max-w-sm">
+          A simple daily checklist app. Create templates, run them each day, and
+          stay on top of what matters.
+        </p>
+        <Button asChild>
+          <Link href="/api/auth/signin">Sign in</Link>
+        </Button>
+      </div>
+    );
+  }
+
   const [runs, templates] = await Promise.all([getRuns(), getTemplates()]);
 
   const activeRuns = runs.filter((r) => {
