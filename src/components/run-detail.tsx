@@ -11,6 +11,18 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+function formatCheckedAt(iso: string): string {
+  const d = new Date(iso);
+  const now = new Date();
+  const sameDay =
+    d.getDate() === now.getDate() &&
+    d.getMonth() === now.getMonth() &&
+    d.getFullYear() === now.getFullYear();
+  const time = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  if (sameDay) return time;
+  return d.toLocaleDateString([], { month: "short", day: "numeric" }) + ", " + time;
+}
+
 interface RunDetailProps {
   initialRun: ChecklistRun;
 }
@@ -156,6 +168,11 @@ export function RunDetail({ initialRun }: RunDetailProps) {
               >
                 {item.text}
               </span>
+              {item.checked && item.checkedAt && (
+                <span className="ml-auto shrink-0 text-xs text-muted-foreground">
+                  {formatCheckedAt(item.checkedAt)}
+                </span>
+              )}
             </li>
           ))}
       </ul>
