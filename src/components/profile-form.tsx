@@ -5,13 +5,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 interface ProfileFormProps {
   initialName: string;
@@ -72,28 +65,30 @@ export function ProfileForm({ initialName, initialShowShortcuts }: ProfileFormPr
         </p>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="showShortcuts">Keyboard shortcut badges</Label>
-        <Select
-          value={showShortcuts}
-          onValueChange={(v) => {
-            setShowShortcuts(v as "always" | "modal");
-            setSaved(false);
-          }}
-        >
-          <SelectTrigger id="showShortcuts">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="always">Always visible</SelectItem>
-            <SelectItem value="modal">Only in shortcut modal</SelectItem>
-          </SelectContent>
-        </Select>
-        <p className="text-xs text-muted-foreground">
-          Choose whether shortcut badges appear next to buttons, or only when
-          you press {"\u2318"}/.
-        </p>
-      </div>
+      <fieldset className="space-y-2">
+        <Label asChild><legend>Keyboard shortcut badges</legend></Label>
+        <div className="space-y-1.5">
+          {([
+            { value: "always" as const, label: "Always visible" },
+            { value: "modal" as const, label: `Only in shortcut modal (${"\u2318"}/)` },
+          ]).map((opt) => (
+            <label key={opt.value} className="flex items-center gap-2 text-sm cursor-pointer">
+              <input
+                type="radio"
+                name="showShortcuts"
+                value={opt.value}
+                checked={showShortcuts === opt.value}
+                onChange={() => {
+                  setShowShortcuts(opt.value);
+                  setSaved(false);
+                }}
+                className="accent-primary"
+              />
+              {opt.label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       {error && <p className="text-sm text-destructive">{error}</p>}
 
