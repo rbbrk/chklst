@@ -11,11 +11,12 @@ export default async function ProfilePage() {
 
   const profile = await getProfile();
   const currentName = profile?.displayName ?? session.user.name ?? "";
+  const showShortcuts = profile?.showShortcuts ?? "always";
 
   return (
     <div className="space-y-6">
       <h1 className="text-lg font-semibold">Profile</h1>
-      <ProfileForm initialName={currentName} />
+      <ProfileForm initialName={currentName} initialShowShortcuts={showShortcuts} />
     </div>
   );
 }

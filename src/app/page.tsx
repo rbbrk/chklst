@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/auth";
-import { getRuns, getTemplates } from "@/lib/kv";
+import { getRuns, getTemplates, getProfile } from "@/lib/kv";
 import { getRunStatus } from "@/lib/types";
 import { RunCard } from "@/components/run-card";
 import { Button } from "@/components/ui/button";
@@ -30,7 +30,8 @@ export default async function HomePage() {
     );
   }
 
-  const [runs, templates] = await Promise.all([getRuns(), getTemplates()]);
+  const [runs, templates, profile] = await Promise.all([getRuns(), getTemplates(), getProfile()]);
+  const showKbd = (profile?.showShortcuts ?? "always") === "always";
 
   const activeRuns = runs.filter((r) => {
     const s = getRunStatus(r);
@@ -46,7 +47,7 @@ export default async function HomePage() {
           <Button variant="outline" size="sm" asChild>
             <Link href="/runs" className="gap-1.5">
               History
-              <Kbd className="opacity-50">{"\u2303"}R</Kbd>
+              {showKbd && <Kbd className="opacity-50">{"\u2303"}R</Kbd>}
             </Link>
           </Button>
         </div>
@@ -75,7 +76,7 @@ export default async function HomePage() {
             <Link href="/templates" className="gap-1.5">
               <Plus className="h-4 w-4" />
               Manage
-              <Kbd className="opacity-50">{"\u2303"}T</Kbd>
+              {showKbd && <Kbd className="opacity-50">{"\u2303"}T</Kbd>}
             </Link>
           </Button>
         </div>

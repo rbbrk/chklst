@@ -22,6 +22,7 @@ const SHORTCUT_GROUPS = [
       { keys: ["\u2303", "T"], description: "Go to templates" },
       { keys: ["\u2303", "N"], description: "New template" },
       { keys: ["\u2303", "P"], description: "Profile" },
+      { keys: ["\u2303", "Q"], description: "Sign out" },
     ],
   },
   {

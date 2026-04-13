@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { KeyboardShortcutsModal } from "@/components/keyboard-shortcuts-modal";
 
 function isInputFocused(): boolean {
@@ -47,6 +48,10 @@ export function KeyboardProvider({ children }: { children: React.ReactNode }) {
           case "KeyP":
             e.preventDefault();
             router.push("/profile");
+            break;
+          case "KeyQ":
+            e.preventDefault();
+            signOut({ callbackUrl: "/" });
             break;
         }
       }

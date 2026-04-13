@@ -42,6 +42,8 @@ export interface ChecklistRun {
 
 export interface UserProfile {
   displayName: string;
+  /** "always" (default) or "modal" (only show in Cmd+/ modal) */
+  showShortcuts: "always" | "modal";
 }
 
 export type RunStatus = "pending" | "active" | "completed" | "expired";
