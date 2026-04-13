@@ -15,8 +15,8 @@ export function KeyboardProvider({ children }: { children: React.ReactNode }) {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      // Alt+? (Alt+Shift+/) — always works, even in inputs
-      if (e.altKey && e.shiftKey && e.code === "Slash") {
+      // Cmd+/ — toggle help modal, always works
+      if (e.metaKey && !e.shiftKey && !e.altKey && e.code === "Slash") {
         e.preventDefault();
         setHelpOpen((prev) => !prev);
         return;
@@ -25,7 +25,8 @@ export function KeyboardProvider({ children }: { children: React.ReactNode }) {
       // Skip remaining shortcuts when typing in a form field or modal is open
       if (isInputFocused() || helpOpen) return;
 
-      if (e.altKey) {
+      // Ctrl+letter for navigation (avoids Cmd conflicts with browser/OS)
+      if (e.ctrlKey && !e.metaKey && !e.altKey) {
         switch (e.code) {
           case "KeyH":
             e.preventDefault();

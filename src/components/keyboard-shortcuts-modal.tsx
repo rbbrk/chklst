@@ -17,16 +17,16 @@ const SHORTCUT_GROUPS = [
   {
     title: "Navigation",
     shortcuts: [
-      { keys: ["Alt", "H"], description: "Go to dashboard" },
-      { keys: ["Alt", "R"], description: "Go to run history" },
-      { keys: ["Alt", "T"], description: "Go to templates" },
-      { keys: ["Alt", "N"], description: "New template" },
+      { keys: ["\u2303", "H"], description: "Go to dashboard" },
+      { keys: ["\u2303", "R"], description: "Go to run history" },
+      { keys: ["\u2303", "T"], description: "Go to templates" },
+      { keys: ["\u2303", "N"], description: "New template" },
     ],
   },
   {
     title: "General",
     shortcuts: [
-      { keys: ["Alt", "?"], description: "Show this help" },
+      { keys: ["\u2318", "/"], description: "Show this help" },
       { keys: ["Esc"], description: "Close modal" },
     ],
   },

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { CheckSquare } from "lucide-react";
+import { NavLinks } from "@/components/nav-links";
 
 export async function Nav() {
   const session = await auth();
@@ -14,16 +15,7 @@ export async function Nav() {
           chklst
         </Link>
         <nav className="flex items-center gap-1">
-          {session?.user && (
-            <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">Runs</Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/templates">Templates</Link>
-              </Button>
-            </>
-          )}
+          {session?.user && <NavLinks />}
           {session?.user && (
             <>
               <span className="ml-2 text-xs text-muted-foreground">

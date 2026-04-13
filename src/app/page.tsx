@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { StartRunButton } from "@/components/start-run-button";
 import { Separator } from "@/components/ui/separator";
 import { CheckSquare, Plus } from "lucide-react";
+import { Kbd } from "@/components/ui/kbd";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +44,10 @@ export default async function HomePage() {
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Active runs</h2>
           <Button variant="outline" size="sm" asChild>
-            <Link href="/runs">History</Link>
+            <Link href="/runs" className="gap-1.5">
+              History
+              <Kbd className="opacity-50">{"\u2303"}R</Kbd>
+            </Link>
           </Button>
         </div>
         {activeRuns.length === 0 ? (
@@ -68,9 +72,10 @@ export default async function HomePage() {
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Templates</h2>
           <Button variant="outline" size="sm" asChild>
-            <Link href="/templates">
+            <Link href="/templates" className="gap-1.5">
               <Plus className="h-4 w-4" />
               Manage
+              <Kbd className="opacity-50">{"\u2303"}T</Kbd>
             </Link>
           </Button>
         </div>
