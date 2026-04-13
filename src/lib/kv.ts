@@ -4,13 +4,27 @@ const kv = new Redis({
   url: process.env.KV_REST_API_URL!,
   token: process.env.KV_REST_API_TOKEN!,
 });
-import type { ChecklistTemplate, ChecklistRun } from "./types";
+import type { ChecklistTemplate, ChecklistRun, UserProfile } from "./types";
+
+const PROFILE_KEY = "profile";
 
 const TEMPLATES_INDEX = "templates:index";
 const RUNS_INDEX = "runs:index";
 
 const templateKey = (id: string) => `template:${id}`;
 const runKey = (id: string) => `run:${id}`;
+
+// ---------------------------------------------------------------------------
+// Profile
+// ---------------------------------------------------------------------------
+
+export async function getProfile(): Promise<UserProfile | null> {
+  return kv.get<UserProfile>(PROFILE_KEY);
+}
+
+export async function saveProfile(profile: UserProfile): Promise<void> {
+  await kv.set(PROFILE_KEY, profile);
+}
 
 // ---------------------------------------------------------------------------
 // Templates

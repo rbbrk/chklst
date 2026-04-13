@@ -3,9 +3,12 @@ import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { CheckSquare } from "lucide-react";
 import { NavLinks } from "@/components/nav-links";
+import { getProfile } from "@/lib/kv";
 
 export async function Nav() {
   const session = await auth();
+  const profile = session?.user ? await getProfile() : null;
+  const displayName = profile?.displayName ?? session?.user?.name ?? session?.user?.email;
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
@@ -18,9 +21,12 @@ export async function Nav() {
           {session?.user && <NavLinks />}
           {session?.user && (
             <>
-              <span className="ml-2 text-xs text-muted-foreground">
-                {session.user.name ?? session.user.email}
-              </span>
+              <Link
+                href="/profile"
+                className="ml-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {displayName}
+              </Link>
               <form
                 action={async () => {
                   "use server";

@@ -40,6 +40,10 @@ export interface ChecklistRun {
   createdAt: string;
 }
 
+export interface UserProfile {
+  displayName: string;
+}
+
 export type RunStatus = "pending" | "active" | "completed" | "expired";
 
 export function getRunStatus(run: ChecklistRun): RunStatus {

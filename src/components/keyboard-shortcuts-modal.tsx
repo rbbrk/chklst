@@ -21,6 +21,7 @@ const SHORTCUT_GROUPS = [
       { keys: ["\u2303", "R"], description: "Go to run history" },
       { keys: ["\u2303", "T"], description: "Go to templates" },
       { keys: ["\u2303", "N"], description: "New template" },
+      { keys: ["\u2303", "P"], description: "Profile" },
     ],
   },
   {

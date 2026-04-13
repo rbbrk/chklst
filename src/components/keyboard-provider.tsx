@@ -44,6 +44,10 @@ export function KeyboardProvider({ children }: { children: React.ReactNode }) {
             e.preventDefault();
             router.push("/templates/new");
             break;
+          case "KeyP":
+            e.preventDefault();
+            router.push("/profile");
+            break;
         }
       }
     },
