@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Clock, CheckCircle2, XCircle } from "lucide-react";
+import { Clock, CheckCircle2, XCircle, Ban } from "lucide-react";
 
 interface RunCardProps {
   run: ChecklistRun;
@@ -68,6 +68,13 @@ function StatusBadge({ status }: { status: ReturnType<typeof getRunStatus> }) {
       <Badge variant="muted" className="gap-1">
         <CheckCircle2 className="h-3 w-3" />
         Done
+      </Badge>
+    );
+  if (status === "abandoned")
+    return (
+      <Badge variant="muted" className="gap-1">
+        <Ban className="h-3 w-3" />
+        Abandoned
       </Badge>
     );
   return (

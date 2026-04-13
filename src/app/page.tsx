@@ -33,17 +33,17 @@ export default async function HomePage() {
   const [runs, templates, profile] = await Promise.all([getRuns(), getTemplates(), getProfile()]);
   const showKbd = (profile?.showShortcuts ?? "always") === "always";
 
-  const activeRuns = runs.filter((r) => {
+  const inProgressRuns = runs.filter((r) => {
     const s = getRunStatus(r);
     return s === "active" || s === "pending";
   });
 
   return (
     <div className="space-y-8">
-      {/* Active runs */}
+      {/* In progress */}
       <section>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Active runs</h2>
+          <h2 className="text-lg font-semibold">In progress</h2>
           <Button variant="outline" size="sm" asChild>
             <Link href="/runs" className="gap-1.5">
               History
@@ -51,13 +51,13 @@ export default async function HomePage() {
             </Link>
           </Button>
         </div>
-        {activeRuns.length === 0 ? (
+        {inProgressRuns.length === 0 ? (
           <p className="rounded-xl border border-dashed px-6 py-10 text-center text-sm text-muted-foreground">
-            No active runs. Start one from a template below.
+            Nothing in progress. Start one from a template below.
           </p>
         ) : (
           <ul className="space-y-3">
-            {activeRuns.map((run) => (
+            {inProgressRuns.map((run) => (
               <li key={run.id}>
                 <RunCard run={run} />
               </li>

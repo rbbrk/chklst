@@ -46,11 +46,14 @@ export interface UserProfile {
   showShortcuts: "always" | "modal";
 }
 
-export type RunStatus = "pending" | "active" | "completed" | "expired";
+export type RunStatus = "pending" | "active" | "completed" | "expired" | "abandoned";
+
+const ABANDONED_MS = 2 * 24 * 60 * 60 * 1000; // 2 days
 
 export function getRunStatus(run: ChecklistRun): RunStatus {
   if (run.completedAt) return "completed";
   if (run.expiresAt && new Date(run.expiresAt) < new Date()) return "expired";
+  if (Date.now() - new Date(run.createdAt).getTime() > ABANDONED_MS) return "abandoned";
   if (!run.startedAt && run.expiryConfig.type === "duration") return "pending";
   return "active";
 }

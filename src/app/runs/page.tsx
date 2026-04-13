@@ -11,6 +11,7 @@ const FILTERS: { label: string; value: RunStatus | "all" }[] = [
   { label: "Pending", value: "pending" },
   { label: "Completed", value: "completed" },
   { label: "Expired", value: "expired" },
+  { label: "Abandoned", value: "abandoned" },
 ];
 
 export default function RunsPage() {
