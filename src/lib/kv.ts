@@ -36,9 +36,9 @@ export async function getTemplates(): Promise<ChecklistTemplate[]> {
   const templates = await Promise.all(
     ids.map((id) => kv.get<ChecklistTemplate>(templateKey(id)))
   );
-  return (templates.filter(Boolean) as ChecklistTemplate[]).sort(
-    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  );
+  return (templates.filter(Boolean) as ChecklistTemplate[])
+    .filter((t) => !t.deletedAt)
+    .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 }
 
 export async function getTemplate(id: string): Promise<ChecklistTemplate | null> {
@@ -67,9 +67,9 @@ export async function getRuns(): Promise<ChecklistRun[]> {
   const ids = (await kv.get<string[]>(RUNS_INDEX)) ?? [];
   if (ids.length === 0) return [];
   const runs = await Promise.all(ids.map((id) => kv.get<ChecklistRun>(runKey(id))));
-  return (runs.filter(Boolean) as ChecklistRun[]).sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  return (runs.filter(Boolean) as ChecklistRun[])
+    .filter((r) => !r.deletedAt)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
 export async function getRun(id: string): Promise<ChecklistRun | null> {
@@ -88,4 +88,42 @@ export async function deleteRun(id: string): Promise<void> {
   const ids = (await kv.get<string[]>(RUNS_INDEX)) ?? [];
   await kv.set(RUNS_INDEX, ids.filter((i) => i !== id));
   await kv.del(runKey(id));
+}
+
+// ---------------------------------------------------------------------------
+// Bulk soft-delete
+// ---------------------------------------------------------------------------
+
+export async function softDeleteAllRuns(): Promise<number> {
+  const ids = (await kv.get<string[]>(RUNS_INDEX)) ?? [];
+  if (ids.length === 0) return 0;
+  const now = new Date().toISOString();
+  const runs = await Promise.all(ids.map((id) => kv.get<ChecklistRun>(runKey(id))));
+  let count = 0;
+  await Promise.all(
+    runs.map((run) => {
+      if (run && !run.deletedAt) {
+        count++;
+        return kv.set(runKey(run.id), { ...run, deletedAt: now });
+      }
+    })
+  );
+  return count;
+}
+
+export async function softDeleteAllTemplates(): Promise<number> {
+  const ids = (await kv.get<string[]>(TEMPLATES_INDEX)) ?? [];
+  if (ids.length === 0) return 0;
+  const now = new Date().toISOString();
+  const templates = await Promise.all(ids.map((id) => kv.get<ChecklistTemplate>(templateKey(id))));
+  let count = 0;
+  await Promise.all(
+    templates.map((tpl) => {
+      if (tpl && !tpl.deletedAt) {
+        count++;
+        return kv.set(templateKey(tpl.id), { ...tpl, deletedAt: now });
+      }
+    })
+  );
+  return count;
 }

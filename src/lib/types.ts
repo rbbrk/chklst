@@ -17,6 +17,7 @@ export interface ChecklistTemplate {
   items: TemplateItem[];
   createdAt: string;
   updatedAt: string;
+  deletedAt?: string;
 }
 
 export interface RunItem {
@@ -40,6 +41,7 @@ export interface ChecklistRun {
   expiresAt?: string;
   completedAt?: string;
   createdAt: string;
+  deletedAt?: string;
 }
 
 export interface UserProfile {
