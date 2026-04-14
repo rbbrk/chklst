@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
 
 interface TemplateFormProps {
@@ -112,20 +111,22 @@ export function TemplateForm({ initial }: TemplateFormProps) {
       </div>
 
       {/* Expiry */}
-      <div className="space-y-3">
-        <Label>Expiry</Label>
-        <div className="flex gap-3">
-          <Select value={expiryType} onValueChange={(v) => setExpiryType(v as "duration" | "end-of-day")}>
-            <SelectTrigger className="w-48">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="duration">Duration (timer)</SelectItem>
-              <SelectItem value="end-of-day">End of day</SelectItem>
-            </SelectContent>
-          </Select>
+      <fieldset className="space-y-3">
+        <Label asChild><legend>Expiry</legend></Label>
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm cursor-pointer">
+            <input
+              type="radio"
+              name="expiryType"
+              value="duration"
+              checked={expiryType === "duration"}
+              onChange={() => setExpiryType("duration")}
+              className="accent-primary"
+            />
+            Duration (timer)
+          </label>
           {expiryType === "duration" && (
-            <div className="flex items-center gap-2">
+            <div className="ml-6 flex items-center gap-2">
               <Input
                 type="number"
                 min="1"
@@ -137,13 +138,24 @@ export function TemplateForm({ initial }: TemplateFormProps) {
               <span className="text-sm text-muted-foreground">minutes</span>
             </div>
           )}
+          <label className="flex items-center gap-2 text-sm cursor-pointer">
+            <input
+              type="radio"
+              name="expiryType"
+              value="end-of-day"
+              checked={expiryType === "end-of-day"}
+              onChange={() => setExpiryType("end-of-day")}
+              className="accent-primary"
+            />
+            End of day
+          </label>
         </div>
         <p className="text-xs text-muted-foreground">
           {expiryType === "duration"
             ? "Timer starts when you check the first item."
             : "Run expires at midnight on the day it's started."}
         </p>
-      </div>
+      </fieldset>
 
       {/* Items */}
       <div className="space-y-3">
