@@ -159,59 +159,6 @@ export function TemplateForm({ initial }: TemplateFormProps) {
         </p>
       </fieldset>
 
-      {/* Supplies */}
-      <div className="space-y-3">
-        <Label>Required supplies <span className="text-muted-foreground font-normal">(optional)</span></Label>
-        {supplies.length > 0 && (
-          <ul className="space-y-1.5">
-            {supplies.map((s, idx) => (
-              <li key={idx} className="flex items-center gap-2">
-                <span className="flex-1 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm">
-                  {s}
-                </span>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-destructive hover:text-destructive"
-                  onClick={() => setSupplies((prev) => prev.filter((_, i) => i !== idx))}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
-        <div className="flex gap-2">
-          <Input
-            value={newSupply}
-            onChange={(e) => setNewSupply(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                const text = newSupply.trim();
-                if (text) { setSupplies((prev) => [...prev, text]); setNewSupply(""); }
-              }
-            }}
-            placeholder="e.g. Loofa, toilet blue block…"
-          />
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={() => {
-              const text = newSupply.trim();
-              if (text) { setSupplies((prev) => [...prev, text]); setNewSupply(""); }
-            }}
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Things you need to have on hand before starting this checklist.
-        </p>
-      </div>
-
       {/* Items */}
       <div className="space-y-3">
         <Label>Items</Label>
@@ -265,6 +212,59 @@ export function TemplateForm({ initial }: TemplateFormProps) {
             <Plus className="h-4 w-4" />
           </Button>
         </div>
+      </div>
+
+      {/* Supplies */}
+      <div className="space-y-3">
+        <Label>Required supplies <span className="text-muted-foreground font-normal">(optional)</span></Label>
+        {supplies.length > 0 && (
+          <ul className="space-y-1.5">
+            {supplies.map((s, idx) => (
+              <li key={idx} className="flex items-center gap-2">
+                <span className="flex-1 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm">
+                  {s}
+                </span>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-destructive hover:text-destructive"
+                  onClick={() => setSupplies((prev) => prev.filter((_, i) => i !== idx))}
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="flex gap-2">
+          <Input
+            value={newSupply}
+            onChange={(e) => setNewSupply(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                const text = newSupply.trim();
+                if (text) { setSupplies((prev) => [...prev, text]); setNewSupply(""); }
+              }
+            }}
+            placeholder="e.g. Loofa, toilet blue block…"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              const text = newSupply.trim();
+              if (text) { setSupplies((prev) => [...prev, text]); setNewSupply(""); }
+            }}
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Things you need to have on hand before starting this checklist.
+        </p>
       </div>
 
       {error && <p className="text-sm text-destructive">{error}</p>}
