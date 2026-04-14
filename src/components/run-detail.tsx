@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Clock, CheckCircle2 } from "lucide-react";
+import { Clock, CheckCircle2, PackageOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 function formatCheckedAt(iso: string): string {
@@ -137,6 +137,21 @@ export function RunDetail({ initialRun }: RunDetailProps) {
 
       {/* Progress */}
       <Progress value={pct} className="h-2" />
+
+      {/* Supplies */}
+      {run.supplies && run.supplies.length > 0 && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3">
+          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-blue-800">
+            <PackageOpen className="h-4 w-4" />
+            Required supplies
+          </div>
+          <ul className="ml-6 list-disc space-y-0.5 text-sm text-blue-700">
+            {run.supplies.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Items */}
       <ul className="space-y-1">

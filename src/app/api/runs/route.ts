@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
     templateId: template.id,
     templateName: template.name,
     expiryConfig: template.expiryConfig,
+    supplies: template.supplies,
     items: template.items.map((item) => ({
       id: generateId(),
       text: item.text,

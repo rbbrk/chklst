@@ -27,6 +27,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     name: body.name ?? existing.name,
     description: body.description ?? existing.description,
     expiryConfig: body.expiryConfig ?? existing.expiryConfig,
+    supplies: Array.isArray(body.supplies) ? body.supplies : existing.supplies,
     items: body.items ?? existing.items,
     updatedAt: new Date().toISOString(),
   };

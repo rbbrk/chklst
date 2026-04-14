@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
     name: body.name,
     description: body.description,
     expiryConfig: body.expiryConfig,
+    supplies: Array.isArray(body.supplies) ? body.supplies : undefined,
     items: (body.items ?? []).map((item: { id: string; text: string }, i: number) => ({
       id: item.id ?? generateId(),
       text: item.text,

@@ -13,6 +13,7 @@ export interface ChecklistTemplate {
   name: string;
   description?: string;
   expiryConfig: ExpiryConfig;
+  supplies?: string[];
   items: TemplateItem[];
   createdAt: string;
   updatedAt: string;
@@ -31,6 +32,7 @@ export interface ChecklistRun {
   templateId: string;
   templateName: string;
   expiryConfig: ExpiryConfig;
+  supplies?: string[];
   items: RunItem[];
   /** Set when first item is checked (duration-based expiry only) */
   startedAt?: string;
